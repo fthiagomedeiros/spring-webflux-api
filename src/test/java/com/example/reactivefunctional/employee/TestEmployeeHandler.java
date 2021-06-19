@@ -13,8 +13,11 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Mono;
 
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes =
-        {EmployeeRouter.class, EmployeeHandler.class, EmployeeRepositoryImpl.class, EmployeeRepository.class})
+@ContextConfiguration(classes = {
+                    EmployeeRouter.class,
+                    EmployeeHandler.class,
+                    EmployeeRepositoryImpl.class,
+                    EmployeeRepository.class})
 @WebFluxTest
 public class TestEmployeeHandler {
 
@@ -32,21 +35,19 @@ public class TestEmployeeHandler {
     public void testGetHello() {
         webTestClient
                 .get()
-                .uri("/employees/1")
+                .uri("/employee/1")
                 .exchange()
                 .expectStatus()
                 .is2xxSuccessful()
                 .expectBody()
-                .jsonPath("name").isEqualTo("Francisco");
+                .jsonPath("$").isNotEmpty();
     }
 
     @Test
     public void shouldCreateNewEmployee() {
-        //Test should fail because of different firstName
-
         Employee e = Employee.builder()
-                .firstName("francisco")
-                .lastName("medeiros")
+                .firstName("Francisco")
+                .lastName("Medeiros")
                 .build();
 
         webTestClient
@@ -59,6 +60,38 @@ public class TestEmployeeHandler {
                 .is2xxSuccessful()
                 .expectBody()
                 .jsonPath("firstName").isEqualTo("Francisco");
+    }
+
+    @Test
+    public void dateToIsBeforeOrTheSameDateFrom() {
+        String path = "/employee/date?dateTo=2020-01-01&dateFrom=2020-01-01";
+
+        webTestClient
+                .get()
+                .uri(path)
+                .exchange()
+                .expectStatus()
+                .is2xxSuccessful()
+                .expectBody()
+                .consumeWith(System.out::print)
+                .jsonPath("response")
+                .isEqualTo("true");
+    }
+
+    @Test
+    public void dateToIsAfterOrTheSameDateFrom() {
+        String path = "/employee/date?dateTo=2020-01-02&dateFrom=2020-01-01";
+
+        webTestClient
+                .get()
+                .uri(path)
+                .exchange()
+                .expectStatus()
+                .is2xxSuccessful()
+                .expectBody()
+                .consumeWith(System.out::print)
+                .jsonPath("response")
+                .isEqualTo("false");
     }
 
 }

@@ -16,7 +16,7 @@ public class EmployeeRouter {
     public RouterFunction<ServerResponse> employeeRoutes(EmployeeHandler employeeHandler) {
         return RouterFunctions.route()
                 .path("/employee", builder -> builder
-                        .GET("data", accept(MediaType.APPLICATION_JSON), employeeHandler::validateDate)
+                        .GET("date", accept(MediaType.APPLICATION_JSON), employeeHandler::validateDate)
                         .POST("", accept(MediaType.APPLICATION_JSON), employeeHandler::createEmployee)
                         .GET("/{id}", accept(MediaType.APPLICATION_JSON), employeeHandler::getEmployee)
                         .GET("", accept(MediaType.APPLICATION_JSON), employeeHandler::getAllEmployees))

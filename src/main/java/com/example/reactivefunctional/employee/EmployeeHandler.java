@@ -1,6 +1,7 @@
 package com.example.reactivefunctional.employee;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
@@ -15,6 +16,7 @@ import java.util.Optional;
 import static org.springframework.web.reactive.function.BodyInserters.fromPublisher;
 import static org.springframework.web.reactive.function.server.ServerResponse.ok;
 
+@Slf4j
 @Component
 @AllArgsConstructor
 public class EmployeeHandler {
@@ -38,6 +40,7 @@ public class EmployeeHandler {
     }
 
     public Mono<ServerResponse> validateDate(ServerRequest serverRequest) {
+        log.debug(String.format("call for method %s", serverRequest.queryParam("dateFrom")));
         Mono<Optional<String>> v1 = Mono.just(serverRequest.queryParam("dateTo"));
         Mono<Optional<String>> v2 = Mono.just(serverRequest.queryParam("dateFrom"));
 

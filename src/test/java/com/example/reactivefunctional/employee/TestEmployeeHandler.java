@@ -10,7 +10,11 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = {
@@ -92,6 +96,19 @@ public class TestEmployeeHandler {
                 .consumeWith(System.out::print)
                 .jsonPath("response")
                 .isEqualTo("false");
+    }
+
+    @Test
+    public void testFunctional() {
+        List<Integer> elements = new ArrayList<>();
+
+        Flux.just(1, 2, 3, 4)
+                .log()
+                .subscribe(elements::add);
+
+        Mono.just("1").map(e -> e).log().subscribe();
+
+        System.out.println(elements);
     }
 
 }

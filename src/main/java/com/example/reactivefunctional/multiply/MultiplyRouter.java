@@ -17,8 +17,12 @@ public class MultiplyRouter {
         return RouterFunctions.route()
                 .path("/multiply", builder -> builder
                         .GET(accept(MediaType.APPLICATION_JSON), operatorHandler::multiply)
-                ).path("sum", builder -> builder
+                ).path("/sum", builder -> builder
                         .GET(accept(MediaType.APPLICATION_JSON), operatorHandler::sum)
+                ).path("/square", builder -> builder
+                        .GET(accept(MediaType.APPLICATION_JSON), operatorHandler::square)
+                ).path("/multiplyTo10", builder -> builder
+                        .GET(accept(MediaType.APPLICATION_JSON), operatorHandler::multiplyTo10)
                 )
                 .build();
     }

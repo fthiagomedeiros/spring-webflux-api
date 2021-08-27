@@ -30,8 +30,7 @@ public class EmployeeHandler {
     }
 
     public Mono<ServerResponse> getEmployee(ServerRequest serverRequest) {
-        return ok()
-                .body(Mono.just(String.format("It works for %s ", serverRequest.pathVariable("id"))), String.class);
+        return ok().body(Mono.just(String.format("It works for %s ", serverRequest.pathVariable("id"))), String.class);
     }
 
     public Mono<ServerResponse> getAllEmployees(ServerRequest serverRequest) {

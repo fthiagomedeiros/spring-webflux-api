@@ -4,9 +4,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import lombok.With;
+import org.assertj.core.util.Maps;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -46,8 +49,8 @@ public class BasicTest {
                         "      \"id\":\"1\",\n" +
                         "      \"name\":\"XYZ\",\n" +
                         "      \"attributes\":{\n" +
-                        "         \"key1\":\"value1\",\n" +
-                        "         \"key2\":\"value2\"\n" +
+                        "         \"key1\":\"1\",\n" +
+                        "         \"key2\":\"2\"\n" +
                         "      }\n" +
                         "   }\n" +
                         "]";
@@ -55,14 +58,22 @@ public class BasicTest {
         List<Student> participantJsonList = mapper.readValue(json, new TypeReference<>() {});
         System.out.println(participantJsonList);
 
+        Student.builder()
+                .name("Francisco")
+                .id("10")
+                .attributes(Maps.newHashMap("A", 1))
+                .build();
+
     }
 }
 
+@Builder
+@With
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 class Student {
     private String id;
     private String name;
-    private Map<String, String> attributes;
+    private Map<String, Integer> attributes;
 }

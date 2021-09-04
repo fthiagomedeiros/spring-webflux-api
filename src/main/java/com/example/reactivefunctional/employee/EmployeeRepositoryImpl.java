@@ -19,8 +19,8 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     }
 
     @Override
-    public Flux<List<Employee>> findAll() {
-        return Flux.just(employee);
+    public Flux<Employee> findAll() {
+        return Flux.fromIterable(employee);
     }
 
 }

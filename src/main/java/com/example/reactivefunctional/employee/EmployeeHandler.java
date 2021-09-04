@@ -34,8 +34,8 @@ public class EmployeeHandler {
     }
 
     public Mono<ServerResponse> getAllEmployees(ServerRequest serverRequest) {
-        Flux<List<Employee>> listOfEmployees = repo.findAll();
-        return ok().body(repo.findAll(), Employee.class);
+        Flux<Employee> listOfEmployees = repo.findAll();
+        return ok().body(listOfEmployees, Employee.class);
     }
 
     public Mono<ServerResponse> validateDate(ServerRequest serverRequest) {
